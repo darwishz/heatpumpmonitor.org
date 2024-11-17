@@ -137,13 +137,19 @@ function load_daily_stats_system($meta, $reload) {
     $start = $data_start;
 
     if ($reload !== false) {
-        $mysqli->query("DELETE FROM system_stats_daily WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_all_v2 WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_last365_v2 WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_last90_v2 WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_last30_v2 WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_last7_v2 WHERE `id`='$systemid'");
-        $mysqli->query("DELETE FROM system_stats_monthly_v2 WHERE `id`='$systemid'");
+       //changed to array and loop to ease out readiblity
+        $tables = [
+            'system_stats_daily',
+            'system_stats_all_v2',
+            'system_stats_last365_v2',
+            'system_stats_last90_v2',
+            'system_stats_last30_v2',
+            'system_stats_last7_v2',
+            'system_stats_monthly_v2',
+        ];
+        foreach ($tables as $table) {
+            $mysqli->query("DELETE FROM $table WHERE `id`='$systemid'");
+        }
     }
 
     for ($x=0; $x<200; $x++) {
@@ -250,25 +256,18 @@ function load_daily_stats_system($meta, $reload) {
 function process_rolling_stats($systemlist, $single_system, $reload) {
     global $mysqli, $user, $system, $system_stats;
 
-    $date = new DateTime();
-    $date->setTimezone(new DateTimeZone('Europe/London'));
-    $date->modify("midnight");
-    $end = $date->getTimestamp()+(3600*24);
-
-    $date->modify("-7 days");
-    $start_last7 = $date->getTimestamp();
-
-    $date->setTimestamp($end);
-    $date->modify("-30 days");
-    $start_last30 = $date->getTimestamp();
-
-    $date->setTimestamp($end);
-    $date->modify("-90 days");
-    $start_last90 = $date->getTimestamp();
-
-    $date->setTimestamp($end);
-    $date->modify("-365 days");
-    $start_last365 = $date->getTimestamp();
+    function get_timestamp_for_range_rollingstat($days_offset, $timezone = "Europe/London") {
+        $date = new DateTime();
+        $date->setTimezone(new DateTimeZone('Europe/London'));
+        $date->modify("midnight");
+        $end = $date->getTimestamp()+(3600*24);
+        return $date->getTimestamp();
+    }
+    
+    $start_last7= get_timestamp_for_range_rollingstat(-7);
+    $start_last30 = get_timestamp_for_range_rollingstat(-30);
+    $start_last90 = get_timestamp_for_range_rollingstat(-90);
+    $start_last365 = = get_timestamp_for_range_rollingstat(-365);
 
     $processed_systems = 0;
     
@@ -317,18 +316,20 @@ function process_rolling_stats($systemlist, $single_system, $reload) {
 
 function process_monthly_stats($systemlist, $single_system, $reload) {
     global $mysqli, $user, $system, $system_stats;
+
+    //optimize to use function for easier maintainablitiy
+    function get_timestamp_for_range_monthlystat($days_offset, $timezone = "Europe/London") {
+        $date = new DateTime();
+        $date->setTimezone(new DateTimeZone($timezone));
+        $date->modify("midnight $days_offset days");
+        return $date->getTimestamp();
+    }
     
-    $date = new DateTime();
-    $date->setTimezone(new DateTimeZone('Europe/London'));
-    $date->modify("midnight");
-    $end = $date->getTimestamp();
-
-    $date->modify("-30 days");
-    $start_last30 = $date->getTimestamp();
-
-    $date->setTimestamp($end);
-    $date->modify("-365 days");
-    $start_last365 = $date->getTimestamp();
+    $end = get_timestamp_for_range_monthlystat(0);
+    $start_last7 = get_timestamp_for_range_monthlystat(-7);
+    $start_last30 = get_timestamp_for_range_monthlystat(-30);
+    $start_last90 = get_timestamp_for_range_monthlystat(-90);
+    $start_last365 = get_timestamp_for_range_monthlystat(-365);
 
     $processed_systems = 0;
     
