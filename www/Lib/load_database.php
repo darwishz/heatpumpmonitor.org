@@ -44,7 +44,7 @@ $mysqli->set_charset("utf8");
 // Check if redis class exists
 if (class_exists('Redis')) {
     $redis = new Redis();
-    $connected = $redis->connect('localhost');    
+    $connected = $redis->connect('redis', 6379);    
 } else {
     $redis = false;
     $connected = false;
