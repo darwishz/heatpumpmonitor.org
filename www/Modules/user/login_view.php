@@ -2,8 +2,8 @@
 // no direct access
 defined('EMONCMS_EXEC') or die('Restricted access');
 
-$enable_register = true;
-$emoncmsorg_only = false;
+$enable_register = false;
+$emoncmsorg_only = true;
 
 ?>
 
@@ -87,60 +87,59 @@ $emoncmsorg_only = false;
             public_mode_enabled: public_mode_enabled
         },
         methods: {
-            async login() {
-                this.loading = true; // Start loading state
+            login: function() {
                 const params = new URLSearchParams();
                 params.append('username', this.username);
                 params.append('password', this.password);
+                if (emoncmsorg_only) {
+                    params.append('emoncmsorg', 0);
+                } else {
+                    params.append('emoncmsorg', this.mode == "emoncmsorg" ? 1 : 0);
+                }
+
                 params.append('emoncmsorg', this.mode == "emoncmsorg" ? 1 : 0);
 
-                try {
-                    const response = await axios.post(path + "user/login.json", params);
-                    if (response.data.success) {
-                        app.error = false;
-                        window.location.href = path + "system/list/user";
-                    } else {
-                        app.error = response.data.message;
-                        app.success = false;
-                    }
-                } catch (error) {
-                    console.log(error);
-                    app.error = "An error occurred. Please try again.";
-                } finally {
-                    this.loading = false; // End loading state
-                }
+                axios.post(path + "user/login.json", params)
+                    .then(function(response) {
+                        if (response.data.success) {
+                            app.error = false;
+                            window.location.href = path + "system/list/user";
+                        } else {
+                            app.error = response.data.message;
+                            app.success = false;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
             },
-            async register() {
-                this.loading = true; // Start loading state
+            register: function() {
                 const params = new URLSearchParams();
                 params.append('username', this.username);
                 params.append('password', this.password);
                 params.append('password2', this.password2);
                 params.append('email', this.email);
 
-                try {
-                    const response = await axios.post(path + "user/register.json", params);
-                    if (response.data.success) {
-                        app.error = false;
-                        if (response.data.verifyemail !== undefined && response.data.verifyemail) {
-                            app.mode = 'login';
-                            app.success = "Registration successful, please check your email to verify your account";
+                axios.post(path + "user/register.json", params)
+                    .then(function(response) {
+                        if (response.data.success) {
+                            app.error = false;
+                            if (response.data.verifyemail!=undefined && response.data.verifyemail) {
+                                app.mode = 'login';
+                                app.success = "Registration successful, please check your email to verify your account";
+                            } else {
+                                window.location.href = path + "system/list/user"
+                            }
                         } else {
-                            window.location.href = path + "system/list/user";
+                            app.error = response.data.message;
+                            app.success = false;
                         }
-                    } else {
-                        app.error = response.data.message;
-                        app.success = false;
-                    }
-                } catch (error) {
-                    console.log(error);
-                    app.error = "An error occurred. Please try again.";
-                } finally {
-                    this.loading = false; // End loading state
-                }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
             }
         }
-
     });
     
     if (!public_mode_enabled) {
