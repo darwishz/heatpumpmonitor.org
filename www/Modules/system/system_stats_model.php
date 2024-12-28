@@ -2,6 +2,7 @@
 
 // no direct access
 defined('EMONCMS_EXEC') or die('Restricted access');
+ini_set('memory_limit', '512M');
 
 class SystemStats
 {
