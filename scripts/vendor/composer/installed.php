@@ -3,7 +3,11 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
         'reference' => '821886438926581f7563fdb047ad58730e6b1685',
+=======
+        'reference' => '8e5baa492a2767557ea043725049213caedd8102',
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +17,11 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => '821886438926581f7563fdb047ad58730e6b1685',
+=======
+            'reference' => '8e5baa492a2767557ea043725049213caedd8102',
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -55,6 +63,7 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+<<<<<<< HEAD
         'phpstan/phpstan' => array(
             'pretty_version' => '2.0.4',
             'version' => '2.0.4.0',
@@ -64,6 +73,8 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '11.0.8',
             'version' => '11.0.8.0',
@@ -253,6 +264,7 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+<<<<<<< HEAD
         'squizlabs/php_codesniffer' => array(
             'pretty_version' => '3.11.2',
             'version' => '3.11.2.0',
@@ -262,6 +274,8 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
         'staabm/side-effects-detector' => array(
             'pretty_version' => '1.0.5',
             'version' => '1.0.5.0',

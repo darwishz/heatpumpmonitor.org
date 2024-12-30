@@ -249,6 +249,7 @@
             "install-path": "../phar-io/version"
         },
         {
+<<<<<<< HEAD
             "name": "phpstan/phpstan",
             "version": "2.0.4",
             "version_normalized": "2.0.4.0",
@@ -310,6 +311,8 @@
             "install-path": "../phpstan/phpstan"
         },
         {
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
             "name": "phpunit/php-code-coverage",
             "version": "11.0.8",
             "version_normalized": "11.0.8.0",
@@ -1720,6 +1723,7 @@
             "install-path": "../sebastian/version"
         },
         {
+<<<<<<< HEAD
             "name": "squizlabs/php_codesniffer",
             "version": "3.11.2",
             "version_normalized": "3.11.2.0",
@@ -1803,6 +1807,8 @@
             "install-path": "../squizlabs/php_codesniffer"
         },
         {
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
             "name": "staabm/side-effects-detector",
             "version": "1.0.5",
             "version_normalized": "1.0.5.0",
@@ -1917,7 +1923,10 @@
         "nikic/php-parser",
         "phar-io/manifest",
         "phar-io/version",
+<<<<<<< HEAD
         "phpstan/phpstan",
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
         "phpunit/php-code-coverage",
         "phpunit/php-file-iterator",
         "phpunit/php-invoker",
@@ -1939,7 +1948,10 @@
         "sebastian/recursion-context",
         "sebastian/type",
         "sebastian/version",
+<<<<<<< HEAD
         "squizlabs/php_codesniffer",
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
         "staabm/side-effects-detector",
         "theseer/tokenizer"
     ]

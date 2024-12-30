@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "44f13c0a6b5ea90de00ed8d4c8dab8b4",
+=======
+    "content-hash": "0f6a6a8c9b2fa96a6f6430a053c2f7cd",
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
     "packages": [],
     "packages-dev": [
         {
@@ -244,6 +248,7 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "phpstan/phpstan",
             "version": "2.0.4",
             "source": {
@@ -302,6 +307,8 @@
             "time": "2024-12-17T17:14:01+00:00"
         },
         {
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
             "name": "phpunit/php-code-coverage",
             "version": "11.0.8",
             "source": {
@@ -1649,6 +1656,7 @@
             "time": "2024-10-09T05:16:32+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "squizlabs/php_codesniffer",
             "version": "3.11.2",
             "source": {
@@ -1729,6 +1737,8 @@
             "time": "2024-12-11T16:04:26+00:00"
         },
         {
+=======
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
             "name": "staabm/side-effects-detector",
             "version": "1.0.5",
             "source": {
