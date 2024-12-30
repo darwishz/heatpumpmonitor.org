@@ -78,6 +78,7 @@ services:
       start_period: 60s
       timeout: 2s
       retries: 10
+  
   redis:
     image: redis:latest
     ports:

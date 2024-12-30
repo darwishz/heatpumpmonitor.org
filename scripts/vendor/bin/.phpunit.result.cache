@@ -1,1 +1,1 @@
-{"version":1,"defects":{"ColdestDayTest::testQueryExecution":7,"ColdestDayIntegrationTest::testColdestDayScript":8},"times":{"ColdestDayTest::testQueryExecution":0.027}}
+{"version":1,"defects":{"ColdestDayTest::testQueryExecution":7,"ColdestDayIntegrationTest::testColdestDayScript":8},"times":{"ColdestDayTest::testQueryExecution":1.266,"ColdestDayIntegrationTest::testColdestDayScript":0.03}}

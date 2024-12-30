@@ -6,13 +6,13 @@ ini_set('memory_limit', '512M');
 
 class SystemStats
 {
-    private mysqli $mysqli;
-    private array $system;
-    private ?Redis $redis = null;
+    private $mysqli;
+    private $system;
+    private $redis;
     
-    public array $schema;
+    public $schema = array();
 
-    public function __construct(mysqli $mysqli, array $system)
+    public function __construct($mysqli,$system)
     {
         $this->mysqli = $mysqli;
         $this->system = $system;
@@ -23,20 +23,16 @@ class SystemStats
         $schema = array();
         require "Modules/system/system_schema.php";
 
-        // Assign the schema directly without using a method
-        foreach ($schema as $key => $value) {
-            $this->schema[$key] = $value;
-        }
-        // $this->schema['system_stats_monthly_v2'] = $this->system->populate_codes($schema['system_stats_monthly_v2']);
-        // $this->schema['system_stats_last7_v2'] = $this->system->populate_codes($schema['system_stats_last7_v2']);
-        // $this->schema['system_stats_last30_v2'] = $this->system->populate_codes($schema['system_stats_last30_v2']);
-        // $this->schema['system_stats_last90_v2'] = $this->system->populate_codes($schema['system_stats_last90_v2']);
-        // $this->schema['system_stats_last365_v2'] = $this->system->populate_codes($schema['system_stats_last365_v2']);
-        // $this->schema['system_stats_all_v2'] = $this->system->populate_codes($schema['system_stats_all_v2']);
-        // $this->schema['system_stats_daily'] = $this->system->populate_codes($schema['system_stats_daily']);
+        $this->schema['system_stats_monthly_v2'] = $this->system->populate_codes($schema['system_stats_monthly_v2']);
+        $this->schema['system_stats_last7_v2'] = $this->system->populate_codes($schema['system_stats_last7_v2']);
+        $this->schema['system_stats_last30_v2'] = $this->system->populate_codes($schema['system_stats_last30_v2']);
+        $this->schema['system_stats_last90_v2'] = $this->system->populate_codes($schema['system_stats_last90_v2']);
+        $this->schema['system_stats_last365_v2'] = $this->system->populate_codes($schema['system_stats_last365_v2']);
+        $this->schema['system_stats_all_v2'] = $this->system->populate_codes($schema['system_stats_all_v2']);
+        $this->schema['system_stats_daily'] = $this->system->populate_codes($schema['system_stats_daily']);
     }
 
-    public function get_system_config(int $userid, int $systemid): array
+    public function get_system_config($userid, $systemid)
     {
         // get config if owned by user or public
         $userid = (int) $userid;
@@ -75,20 +71,7 @@ class SystemStats
         $output->server = $server;
         $output->apikey = $readkey;
 
-        // Current implementation...
-        $config = json_decode(file_get_contents($getconfig), true); // Ensure array is returned
-
-        return [
-            'elec' => (int) $config['config']['heatpump_elec'],
-            'heat' => (int) $config['config']['heatpump_heat'],
-            'flowT' => (int) $config['config']['heatpump_flowT'],
-            'returnT' => (int) $config['config']['heatpump_returnT'],
-            'outsideT' => isset($config['config']['heatpump_outsideT']) ? (int) $config['config']['heatpump_outsideT'] : null,
-            'server' => $server,
-            'apikey' => $readkey
-        ];
-
-        // return $output;
+        return $output;
     }
     
     public function get_system_config_with_meta($userid, $systemid)
@@ -166,7 +149,7 @@ class SystemStats
         return $config;
     }
 
-    public function load_from_url(string $url, $start = false, $end = false, string $api = 'getstats2'): array
+    public function load_from_url($url, $start = false, $end = false, $api = 'getstats2')
     {
         # decode the url to separate out any args
         $url_parts = parse_url($url);
@@ -214,8 +197,7 @@ class SystemStats
         }
     }
 
-    public function process_data(string $url, int $timeout = 5): bool
-    {
+    public function process_data($url, $timeout = 5) {
         # decode the url to separate out any args
         $url_parts = parse_url($url);
         if (!isset($url_parts['scheme']) || !isset($url_parts['host']) || !isset($url_parts['path'])) {
@@ -244,29 +226,16 @@ class SystemStats
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $getstats);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         $result = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         
-        if ($httpCode == 200) {
-            return true; // Return true for successful response
+        if ($httpCode == 200) { // Check if successful response
+            return json_decode($result,true);
         } else {
-            return false; // Return false for failure
+            return array("success" => false, "message" => $httpCode);
         }
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, $getstats);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        // $result = curl_exec($ch);
-        // $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        // curl_close($ch);
-        
-        // if ($httpCode == 200) { // Check if successful response
-        //     return json_decode($result,true);
-        // } else {
-        //     return array("success" => false, "message" => $httpCode);
-        // }
     }
 
     public function clear_daily($url) {
@@ -404,7 +373,7 @@ class SystemStats
 
 
     // Save day
-    public function save_day(int $systemid, $row): bool
+    public function save_day($systemid, $row) 
     {
         $systemid = (int) $systemid;
         $timestamp = (int) $row['timestamp'];
@@ -421,10 +390,10 @@ class SystemStats
 
     public function save_stats_table($table_name,$stats) {
         // Generate query from schema
-        $fields = [];
-        $qmarks = [];
-        $codes = [];
-        $values = [];
+        $fields = array();
+        $qmarks = array();
+        $codes = array();
+        $values = array();
         foreach ($this->schema[$table_name] as $field => $field_schema) {
             if (isset($stats[$field])) {
                 $fields[] = $field;
@@ -438,38 +407,13 @@ class SystemStats
         $codes = implode('',$codes);
 
         $stmt = $this->mysqli->prepare("INSERT INTO $table_name ($fields) VALUES ($qmarks)");
-        if (!$stmt) {
-            throw new \RuntimeException("MySQL prepare error: " . $this->mysqli->error);
-        }
         $stmt->bind_param($codes, ...$values);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function get_monthly($start,$end,$system_id = false): array
-    {
-        $where = '';
-    if ($start !== false && $end !== false) {
-        $start = (int)$start;
-        $end = (int)$end;
-        $where = "WHERE timestamp >= $start AND timestamp < $end";
-    }
-    if ($system_id !== false) {
-        $system_id = (int)$system_id;
-        $where .= ($where ? ' AND' : 'WHERE') . " id = $system_id";
-    }
-
-    $result = $this->mysqli->query("SELECT * FROM system_stats_monthly_v2 $where");
-    if (!$result) {
-        throw new \RuntimeException("MySQL query error: " . $this->mysqli->error);
-    }
-
-    $monthly = [];
-    while ($row = $result->fetch_object()) {
-        $monthly[] = $row;
-    }
-    return $monthly;
-    // return $this->get('system_stats_monthly_v2',$start,$end,$system_id);
+    public function get_monthly($start,$end,$system_id = false) {
+        return $this->get('system_stats_monthly_v2',$start,$end,$system_id);
     }
 
     public function get_last7($system_id = false) {

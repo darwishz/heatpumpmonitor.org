@@ -1,5 +1,8 @@
 <?php
-define('EMONCMS_EXEC', true);
+if (!defined('EMONCMS_EXEC')) {
+    define('EMONCMS_EXEC', true);
+}
+
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../../www/Modules/system/system_model.php';
