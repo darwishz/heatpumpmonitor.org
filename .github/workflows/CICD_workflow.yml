@@ -39,3 +39,10 @@ jobs:
     needs: build  # Ensure it runs after the build job
     with:
       task_name: "Run delegated tasks after build"
+
+deploy-task:
+    needs: build
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: "staging"
+      deploy_message: "Deploying the latest changes to staging."
