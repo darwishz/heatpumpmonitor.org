@@ -1,0 +1,41 @@
+name: PHP CI/CD Workflow
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [7.4, 8.0, 8.1, 8.2]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Install dependencies
+        run: |
+          composer install
+
+      - name: Run tests 
+        run: |
+          vendor/bin/phpunit
+
+  delegate-task:
+    # Use the reusable workflow to delegate
+    uses: ./.github/workflows/reusable.yml
+    needs: build  # Ensure it runs after the build job
+    with:
+      task_name: "Run delegated tasks after build"
