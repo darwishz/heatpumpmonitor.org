@@ -1,12 +1,35 @@
 # HeatpumpMonitor.org
 
-An open source initiative to share and compare heat pump performance data.
+## About the Project
+HeatpumpMonitor.org is an open-source initiative aimed at monitoring, analyzing, and sharing heat pump performance data. It enables users, such as homeowners, installers, and researchers, to:
+- Visualize energy input/output and temperature readings.
+- Compare the performance of various heat pump models.
+- Identify inefficiencies and make data-driven decisions to optimize heat pump systems.
+
 
 ### See: [https://heatpumpmonitor.org](https://heatpumpmonitor.org)
 
 ![heatpumpmonitor.png](heatpumpmonitor.png)
 
 ------------------------------------------------------------------------------------------------------------------
+
+## Table of Contents
+1. [About the Project](#about-the-project)
+2. [Prerequisites](#prerequisites)
+3. [Install on Apache2 Server](#install-on-existing-apache2-server)
+4. [Helpdesk and Support](#helpdesk-and-support)
+5. [Docker Setup](#docker-setup)
+6. [Troubleshooting Containers](#troubleshooting-containers)
+7. [FAQs](#general-questions)
+
+## Prerequisites
+Before installing the system, ensure you have the following:
+- **Docker**: Version 20.10 or higher
+- **Docker Compose**: Version 1.29 or higher
+- **PHP**: Version 8.3 or higher (if not using Docker)
+- **MariaDB**: Version 11.3 or higher (if not using Docker)
+- **Git**: Installed for cloning the repository
+
 
 ## Install on existing Apache2 server
 
