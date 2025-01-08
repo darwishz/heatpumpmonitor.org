@@ -1,0 +1,14 @@
+**Addressed component of the system :**
+Addresses the data processing and reporting component of the heat pump monitoring system.
+Focuses on retrieving administrative system data, fetching configuration and feed data, and calculating and outputting key performance metrics, such as heat energy output and efficiency percentages.
+
+**Graph chosen :** 
+Program Dependency Graph
+![CBSE-Page-3 drawio (1)](https://github.com/user-attachments/assets/04908ab2-d287-4c27-98ee-4464fe08d9d4)
+
+**Impact Gained from Analysis :**
+Dependencies between modules like user_model, system_model, and database operations are identified, ensuring changes in one area like feed structure are accounted for across the script.
+The script heavily relies on remote APIs such as file_get_contents for feed data. If the remote API structure changes or becomes unavailable, key components like S10: Fetch feed metadata or S11: Fetch feed data will fail.
+Specific points of failure, such as missing configuration (S8: if (heat pump data available)) or unexpected feed data values, are highlighted, aiding maintainability and debugging.
+
+
