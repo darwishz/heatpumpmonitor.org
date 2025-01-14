@@ -1,0 +1,27 @@
+# File: .github/workflows/deploy.yml
+name: Reusable Deployment Workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      deploy_message:
+        required: false
+        type: string
+
+jobs:
+  deploy-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Deploy to environment
+        run: |
+          echo "Deploying to environment: ${{ inputs.environment }}"
+          if [ -n "${{ inputs.deploy_message }}" ]; then
+            echo "Message: ${{ inputs.deploy_message }}"
+          fi
+          echo "Performing deployment steps..."
