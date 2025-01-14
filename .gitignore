@@ -10,3 +10,4 @@ sheet.tsv
 www/settings.php
 www/theme/img/installers/*
 mysqlbackup
+node_modules

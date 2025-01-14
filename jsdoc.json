@@ -1,0 +1,14 @@
+{
+    "source": {
+      "include": ["www/Modules/histogram"],
+      "includePattern": ".+\\.js$",
+      "exclude": ["node_modules"]
+    },
+    "opts": {
+        "destination": "./docs/",
+        "recurse": true,
+        "template": "node_modules/better-docs"
+    }
+
+  }
+  
