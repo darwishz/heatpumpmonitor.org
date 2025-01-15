@@ -181,6 +181,3 @@ php load_dev_env_data.php
 ```bash
 php load_dev_env_data.php
 ```
-
-4. **Can I integrate this system with other IoT platforms?**
-**A:** Yes, the system supports API integrations. Refer to the [API documentation.](http://localhost:8080/api-helper)
