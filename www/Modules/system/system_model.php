@@ -13,7 +13,8 @@ class System
         $this->mysqli = $mysqli;
 
         $schema = array();
-        require "Modules/system/system_schema.php";
+        // require "Modules/system/system_schema.php";
+        require __DIR__ . "/system_schema.php";
         $this->schema_meta = $schema['system_meta'];
         $this->schema_meta = $this->populate_codes($this->schema_meta);
     }

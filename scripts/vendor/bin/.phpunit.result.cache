@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"version":1,"defects":{"ColdestDayTest::testQueryExecution":7,"ColdestDayIntegrationTest::testColdestDayScript":8},"times":{"ColdestDayTest::testQueryExecution":1.266,"ColdestDayIntegrationTest::testColdestDayScript":0.03}}
+=======
+{"version":1,"defects":{"ColdestDayTest::testQueryExecution":7,"ColdestDayIntegrationTest::testColdestDayScript":8},"times":{"ColdestDayTest::testQueryExecution":0.027}}
+>>>>>>> 0dd84189b79712838736d119975f6593dbf2a128
