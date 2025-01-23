@@ -1,0 +1,22 @@
+# File: .github/workflows/reusable.yml
+name: Reusable Workflow
+
+on:
+  workflow_call:  # This enables it to be called by other workflows
+    inputs:
+      task_name:
+        required: true
+        type: string
+
+jobs:
+  delegated-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Print delegated task
+        run: echo "Executing delegated task: ${{ inputs.task_name }}"
+      
+      - name: Perform delegated operation
+        run: echo "This is where you add specific logic for your task."
