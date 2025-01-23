@@ -56,9 +56,9 @@ Access the site by putting http://localhost/heatpumpmonitororg/ in the browser.
 Login using 'Self hosted data' and username and password: admin:admin
 
 -----------------------------------------------------------------------------------------------------------------------
-## Helpdesk and Support
+## Guidance and Support
 
-###  Helpdesk Support
+###  Guide
 A support helpdesk will assist users with issues related to Docker, installation, and troubleshooting.
 
 - **Platform**:  
